@@ -1,0 +1,16 @@
+Chave Primaria - Em um banco de dados relacional, uma chave primária (primary key) é
+um campo (ou conjunto de campos) que serve para identificar de forma única cada registro 
+(linha) em uma tabela.
+A chave primária é usada para:
+- Garantir a integridade dos dados.
+- Relacionar tabelas entre si (ex: usando chaves estrangeiras).
+- Otimizar buscas e indexação.
+- Auto incrementavel
+
+Chave estrangeira - Ela é um campo (ou conjunto de campos) em uma tabela que faz referência à chave primária de outra tabela, criando um relacionamento 
+entre essas duas tabelas.
+
+OBS: 
+- é convencao usar case upper no sql (nao que seja uma regra)
+- Nos diagramas a parte com "pé de galinha  significa  o lado de muitos já a parte da linha reta significa o lado de um .
+
