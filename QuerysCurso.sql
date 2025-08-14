@@ -39,3 +39,32 @@ SELECT * from produtos
 SELECT id , nome FROM produtos;
 
 SELECT preco FROM produtos WHERE preco = 4500.22;
+
+#Trabalhando com insert com select
+
+CREATE TABLE produtos_genericos (
+    nome VARCHAR (150),
+    estoque INTEGER DEFAULT 0
+);
+
+INSERT INTO produtos_genericos 
+SELECT nome , estoque FROM produtos WHERE nome = 'Iphone';
+
+SELECT * FROM produtos_genericos
+
+#Limpando tabela
+TRUNCATE TABLE produtos_genericos
+
+#Exlcuindo tabela
+DROP TABLE produtos_genericos;
+
+#atualizando dados
+
+UPDATE produtos_genericos 
+SET nome = 'Iphone 12 Pro Max'
+WHERE nome = 'Iphone'
+
+#Update sem where cuidado
+UPDATE produtos 
+SET estoque = estoque + 10 
+WHERE id_marca = 2;
