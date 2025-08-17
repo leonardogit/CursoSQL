@@ -29,7 +29,7 @@ VALUES
 INSERT INTO produtos 
 (nome , preco , estoque , id_marca)
 VALUES 
-('Iphone 12 Pro max' , 4500.22 , 14 , 2);
+('Iphone 12 Pro max' , 8500 , 14 , 2);
 
 Alter TABLE produtos
 MODIFY nome VARCHAR(100);
@@ -68,3 +68,18 @@ WHERE nome = 'Iphone'
 UPDATE produtos 
 SET estoque = estoque + 10 
 WHERE id_marca = 2;
+
+
+SELECT * FROM produtos WHERE estoque < 80
+
+SELECT * FROM produtos where estoque < 80  AND preco > 3000;
+
+SELECT * FROM produtos WHERE nome LIKE 'Iphone%'
+ORDER BY preco DESC 
+
+# inner join -  retorna apenas as linhas aonde á correspondecia entre as tabelas envolvidas ou seja deve existir em ambas tabelas
+# full join  -  retorna todas as linhas de ambas as tabelas nao importando se ha correspondencia , no caso as linhas que nao terao correspondecia terao serao preenchidas com null
+# left join  -  retorna todas as linhas da tabela a esquerda ou seja aquela esquerda ou seja a primeira tabela mencionada no join e as linhas correspondendes da tabela a direita(caso nao ouver correspondencia virao como null)
+# right join -  retorna todas as linhas da tabela a direita ou seja aquela segunda do join e as linhas correspondendes da tabela a esquerda (caso ouver null será devolvido null)
+# mais comum no dia a dia é o left join (alguns Bancos nao suportam right join)
+
