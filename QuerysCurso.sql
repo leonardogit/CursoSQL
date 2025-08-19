@@ -83,3 +83,39 @@ ORDER BY preco DESC
 # right join -  retorna todas as linhas da tabela a direita ou seja aquela segunda do join e as linhas correspondendes da tabela a esquerda (caso ouver null será devolvido null)
 # mais comum no dia a dia é o left join (alguns Bancos nao suportam right join)
 
+
+# CREATE TABLE CLIENTS
+
+CREATE TABLE clientes (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR (100),
+    email VARCHAR (150),
+    cidade VARCHAR (50),
+    data_nascimento DATE
+)
+
+SELECT * FROM clientes
+
+# CREATE TABLE Orders
+
+CREATE TABLE pedidos (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    data_pedido DATE DEFAULT (NOW()) ,
+    id_cliente INTEGER,
+    FOREIGN KEY (id_cliente) REFERENCES clientes(id) ,
+    valor_total REAL
+)
+
+#CREATE TABLE ORDERS ITENS
+
+CREATE TABLE itens_pedido (
+    id_pedido INTEGER ,
+    id_produto INTEGER,
+    quantidade INTEGER,
+    preco_unitario REAL ,
+    FOREIGN KEY (id_pedido) REFERENCES pedidos(id),
+    FOREIGN KEY (id_produto) REFERENCES produtos(id),
+    PRIMARY KEY (id_pedido , id_produto)
+)
+
+DROP TABLE cliente
