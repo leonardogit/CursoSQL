@@ -119,3 +119,103 @@ CREATE TABLE itens_pedido (
 )
 
 DROP TABLE cliente
+
+INSERT INTO clientes (nome , email , cidade) VALUES
+('Leonardo Camargos', 'leocamargos@hotmail.com', 'Uberlandia'),
+('Joao Vitor', 'joaovitor@hotmail.com', 'Uberlandia'),
+('Rosa Maria', 'rosamaria@hotmail.com', 'Franca'),
+('Cintia Camargos', 'lbcopias@hotmail.com', 'Catalao'),
+('Henrique Lemos', 'henriquelemos@hotmail.com', 'Araguari');
+
+
+INSERT INTO pedidos (id_cliente , valor_total) VALUES 
+(1 , 5500.00),
+(2 , 2000.00);
+
+INSERT INTO itens_pedido (id_pedido , id_produto , quantidade , preco_unitario) VALUES 
+(1,1,1,3500),
+(1,2,1,2500),
+(2,2,1,2000);
+
+#Resumindo o que essa query faz:
+#Ela retorna uma lista com o nome do cliente e o valor total de cada pedido que ele fez.
+#Se um cliente tiver 3 pedidos, ele aparecerá 3 vezes (um por pedido).
+#Clientes que não possuem pedidos não aparecem no resultado (porque é INNER JOIN
+SELECT 
+    clientes.nome,
+    pedidos.valor_total
+FROM
+    clientes
+    INNER JOIN pedidos ON clientes.id = pedidos.id_cliente;
+
+#CONCEITO DE SUBQYERY - PLUS
+#Em resumo, a subquery funciona como um filtro dinâmico: em vez de você escrever WHERE id_marca = 3, você deixa o SQL descobrir qual é esse ID dentro de outra tabela.
+
+SELECT 
+    nome,preco
+FROM
+    produtos
+WHERE 
+    id_marca IN (SELECT id FROM marcas WHERE nome = 'Lucas Abreu')
+
+#usando inner join para o exemplo acima
+SELECT 
+    produtos.nome,  
+    produtos.preco
+FROM 
+    produtos
+INNER JOIN marcas ON produtos.id_marca = marcas.id
+WHERE 
+    marcas.nome = 'Lucas Abreu' ;
+
+
+
+/*
+Desafio 1: Listar o nome da marca e o nome dos produtos de todas as marcas que começam com 'L'
+- Usa INNER JOIN entre produtos e marcas
+- Usa LIKE 'L%' para filtrar marcas que começam com 'L'
+- Resultado esperado: todas as marcas e produtos cujas marcas começam com 'L'
+
+Desafio 2: Listar apenas os produtos da marca "Leonardo Camargos" com preço acima de 200
+- Pode ser feito com INNER JOIN ou SUBQUERY
+- Filtra pelo nome da marca e pelo preço do produto
+- Resultado esperado: produtos da marca "Leonardo Camargos" com valor > 200
+
+Desafio 3: Mostrar o nome das marcas e a quantidade de produtos de cada marca
+- Usa INNER JOIN entre produtos e marcas
+- Usa GROUP BY no nome da marca
+- Usa COUNT(*) para contar produtos por marca
+- Resultado esperado: uma linha por marca mostrando quantos produtos cada uma possui
+*/
+
+
+SELECT 
+    marcas.nome,
+    produtos.nome
+FROM 
+    produtos
+INNER JOIN marcas ON produtos.id_marca = marcas.id
+WHERE 
+     marcas.nome LIKE 'l%';
+
+
+SELECT 
+    produtos.nome,  
+    produtos.preco
+FROM 
+    produtos
+INNER JOIN marcas ON produtos.id_marca = marcas.id
+WHERE 
+    marcas.nome = 'Leonardo Camargos' AND
+    produtos.preco > 200;
+
+
+SELECT 
+    marcas.nome AS marcas , COUNT(*) AS estoque
+FROM 
+    produtos
+INNER JOIN marcas ON produtos.id_marca = marcas.id
+GROUP BY marcas.nome;  
+
+
+SELECT * FROM marcas
