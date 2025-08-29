@@ -148,6 +148,50 @@ FROM
     clientes
     INNER JOIN pedidos ON clientes.id = pedidos.id_cliente;
 
+# Mas caso for um left join irá aparecer os clientes sem pedidos mesmo que estejam como null
+SELECT
+    clientes.nome,
+    pedidos.valor_total 
+FROM
+    clientes
+    LEFT JOIN pedidos ON clientes.id = pedidos.id_cliente
+
+
+#O RIGHT JOIN garante que todos os pedidos vão aparecer, mesmo que não tenham cliente associado (situação rara, mas pode acontecer se os dados estiverem inconsistentes).
+
+SELECT
+    clientes.nome,
+    pedidos.valor_total
+FROM 
+    clientes
+    RIGHT JOIN pedidos ON clientes.id = pedidos.id_cliente
+
+# FULL JOIN (NAO FUNCIONA PARA MYSQL MAS Á UM CAMINHO O UNION) - FULL JOIN = tudo, casando ou não (união).
+
+SELECT
+    clientes.nome,
+    pedidos.valor_total
+FROM
+    clientes
+    LEFT JOIN pedidos ON clientes.id = pedidos.id_cliente
+UNION
+SELECT
+    clientes.nome,
+    pedidos.valor_total
+FROM 
+    clientes
+    RIGHT JOIN pedidos ON clientes.id = pedidos.id_cliente
+
+
+#Calculando a média de valores
+SELECT sum(valor_total)/COUNT(valor_total) FROM pedidos;
+#Somando os valores 
+SELECT SUM(valor_total) FROM pedidos;
+#Sabendo um valor maximo
+SELECT MAX(valor_total) AS maior_pedido FROM pedidos ;
+#Sabendo um valor minimo
+SELECT MIN(valor_total) AS maior_pedido FROM pedidos ;
+
 #CONCEITO DE SUBQYERY - PLUS
 #Em resumo, a subquery funciona como um filtro dinâmico: em vez de você escrever WHERE id_marca = 3, você deixa o SQL descobrir qual é esse ID dentro de outra tabela.
 
@@ -217,5 +261,16 @@ FROM
 INNER JOIN marcas ON produtos.id_marca = marcas.id
 GROUP BY marcas.nome;  
 
+SELECT 
+    clientes.nome,
+    pedidos.valor_total
+FROM
+    pedidos
+INNER JOIN clientes ON pedidos.id_cliente = clientes.id;
 
-SELECT * FROM marcas
+
+SELECT clientes.nome AS clientes , COUNT(*) AS pedidos
+FROM 
+    pedidos
+INNER JOIN clientes ON pedidos.id_cliente = clientes.id
+GROUP BY clientes.nome;
